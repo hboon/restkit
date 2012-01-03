@@ -22,7 +22,8 @@ def form_encode(obj, charset="utf8"):
 
 class BoundaryItem(object):
     def __init__(self, name, value, fname=None, filetype=None, filesize=None):
-        self.name = url_quote(name)
+        #self.name = url_quote(name)
+        self.name = url_quote(name, safe='/:[]')
         if value is not None and not hasattr(value, 'read'):
             value = self.encode_unreadable_value(value)
             self.size = len(value)
@@ -63,8 +64,8 @@ class BoundaryItem(object):
                 filetype = self.filetype
             else:
                 filetype = "text/plain; charset=utf-8"
-            headers.append("Content-Type: %s" % filetype)
-            headers.append("Content-Length: %i" % self.size)
+            #headers.append("Content-Type: %s" % filetype)
+            #headers.append("Content-Length: %i" % self.size)
             headers.append("")
             headers.append("")
             self._encoded_hdr = CRLF.join(headers)
