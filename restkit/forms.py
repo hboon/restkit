@@ -108,7 +108,10 @@ class MultipartForm(object):
         for param in params:
             name, value = param
             if hasattr(value, "read"):
-                fname = getattr(value, 'name')
+                if hasattr(value, "name"):
+                    fname = getattr(value, 'name')
+                else:
+                    fname = 'unnamed'
                 if fname is not None:
                     filetype = ';'.join(filter(None, mimetypes.guess_type(fname)))
                 else:
